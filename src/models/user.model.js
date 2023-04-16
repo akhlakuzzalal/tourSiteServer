@@ -8,11 +8,11 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: [true, "Email already exist"],
+      unique: true,
     },
     role: { type: String, default: "user" },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: false, versionKey: false }
 );
 
 module.exports = mongoose.model("user", userSchema);
