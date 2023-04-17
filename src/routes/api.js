@@ -7,4 +7,7 @@ router.use("/user", userApi);
 const tourApi = require("./api/tour.api");
 router.use("/tour", tourApi);
 
+const blogApi = require("./api/blog.api");
+router.use("/blog", blogApi);
+
 module.exports = router;
