@@ -15,6 +15,22 @@ exports.createUser = async (req, res) => {
   }
 };
 
+exports.loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const validEmail = checkValidEmail(email);
+    if (!validEmail) return ERROR(res, [], "Invalid email Address");
+    const user = await UserService.getUserByEmail(email);
+    if (!Boolean(user.length)) return ERROR(res, [], "User not found");
+    if (user.message) return ERROR(res, [], user.message);
+    const userPassword = user[0]?.password;
+    if (userPassword !== password) return ERROR(res, [], "Password is wrong");
+    return OK(res, user, "User logged in Successfully");
+  } catch (err) {
+    ERROR(res, [], "Error while logging in user");
+  }
+};
+
 exports.getUser = async (req, res) => {
   try {
     const user = await UserService.getUserByEmail(req.params.email);
