@@ -5,6 +5,7 @@ const UserService = require("../service/userService");
 exports.createATour = async (req, res) => {
   try {
     const { email, tourBody } = req.body;
+    // console.log(email, tourBody);
     const user = await UserService.getUserByEmail(email);
     if (!user.length) return ERROR(res, [], "User not found");
 
