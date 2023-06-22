@@ -20,6 +20,29 @@ exports.createATour = async (req, res) => {
   }
 };
 
+exports.createCustomerTour = async (req, res) => {
+  try {
+    const { email, tourPlan } = req.body;
+    // console.log(email, tourPlan);
+    const user = await UserService.getUserByEmail(email);
+    if (!user.length) return ERROR(res, [], "User not found");
+
+    const tour = await TourService.createCustomTour(tourPlan);
+    if (tour.message) return ERROR(res, [], tour.message);
+    return OK(res, tour, "Tour created successfully");
+  } catch (err) {
+    return ERROR(res, [], "Error while creating a tour");
+  }
+};
+
+exports.getAllCustomerTours = async (req, res) => {
+  try {
+    const tours = await TourService.getAllCustomerTours();
+    return OK(res, tours, "All tours");
+  } catch (err) {
+    return ERROR(res, [], "Error while getting all tours");
+  }
+};
 exports.getAllTours = async (req, res) => {
   try {
     const tours = await TourService.getAllTours();

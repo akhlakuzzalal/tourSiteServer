@@ -9,8 +9,21 @@ exports.createANewTour = async (tourBody) => {
   }
 };
 
+exports.createCustomTour = async (tourBody) => {
+  try {
+    const tour = await db.CustomerTour.create(tourBody);
+    return tour;
+  } catch (err) {
+    return err;
+  }
+};
+
 exports.getAllTours = async () => {
   const tours = await db.Tour.find({});
+  return tours;
+};
+exports.getAllCustomerTours = async () => {
+  const tours = await db.CustomerTour.find({});
   return tours;
 };
 
