@@ -40,3 +40,12 @@ exports.getUser = async (req, res) => {
     ERROR(res, [], "Error while getting user");
   }
 };
+exports.getAllUser = async (req, res) => {
+  try {
+    const user = await UserService.getAllUser();
+    if (!Boolean(user.length)) return ERROR(res, [], "User not found");
+    return OK(res, user, "User found Successfully");
+  } catch (err) {
+    ERROR(res, [], "Error while getting user");
+  }
+};

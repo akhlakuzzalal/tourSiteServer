@@ -14,3 +14,7 @@ exports.getUserByEmail = async (email) => {
   const user = await db.User.find({ email: email });
   return user;
 };
+exports.getAllUser = async () => {
+  const user = await db.User.find({});
+  return user;
+};
