@@ -104,3 +104,18 @@ exports.updateATour = async (req, res) => {
     return ERROR(res, [], "Error while updating a tour");
   }
 };
+
+
+
+// post a review
+exports.addReviewToSingleTour = async (req, res) => {
+  try {
+    const { tourId, ratting } = req.body;
+    const tour = await TourService.findTourById(tourId);
+    if (!tour) return ERROR(res, [], "Tour not found");
+
+    return OK(res, tour, "Tour found");
+  } catch (err) {
+    return ERROR(res, [], "Error while getting a tour");
+  }
+};

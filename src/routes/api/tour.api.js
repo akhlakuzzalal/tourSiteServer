@@ -10,4 +10,7 @@ router.get("/all", TourControler.getAllTours);
 router.get("/:tourId", TourControler.getATour);
 router.put("/update", TourControler.updateATour);
 
+// adding review
+router.post("/add-review", TourControler.addReviewToSingleTour);
+
 module.exports = router;

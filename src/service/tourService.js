@@ -50,3 +50,14 @@ exports.updateATour = async (tourId, tourBody) => {
     return err;
   }
 };
+
+
+// create a customer review
+exports.createANewTour = async (payload) => {
+  try {
+    const review = await db.Review.create(payload);
+    return review;
+  } catch (err) {
+    return err;
+  }
+};
