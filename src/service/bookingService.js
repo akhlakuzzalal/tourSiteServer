@@ -26,9 +26,17 @@ exports.getAllBooking = async () => {
         return err;
     }
 };
-exports.findBookingById = async () => {
+exports.findBookingById = async (tourId) => {
     try {
         const booking = await db.Booking.find({ tour_id: tourId });
+        return booking;
+    } catch (err) {
+        return err;
+    }
+};
+exports.findBookingByEmail = async (email) => {
+    try {
+        const booking = await db.Booking.find({ email: email });
         return booking;
     } catch (err) {
         return err;

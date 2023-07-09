@@ -6,7 +6,7 @@ const UserService = require("../service/userService.js");
 exports.bookingTour = async (req, res) => {
     try {
         const { payload } = req.body;
-      
+
         const existTour = await bookingService.getBookingByEmail(payload.email, payload.tour_id);
 
         if (existTour.length > 0) {
@@ -40,6 +40,18 @@ exports.updateTourStatus = async (req, res) => {
 
     } catch (err) {
         ERROR(res, [], "Error while booking tour");
+    }
+};
+exports.getBookingByEmail = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const bookingData = await bookingService.findBookingByEmail(email);
+        if (!bookingData) return ERROR(res, [], "booking not found");
+
+        return OK(res, bookingData, "Get  booking by email ");
+
+    } catch (err) {
+        ERROR(res, [], "Error while get booking tour");
     }
 };
 exports.getAllBookingTour = async (req, res) => {
