@@ -6,6 +6,13 @@ const bookingSchema = new mongoose.Schema(
         mobile: { type: Number },
         email: { type: String, required: true },
         tour_title: { type: String, required: true },
+        price: { type: Number },
+        payment: {
+            type: String,
+            enum: ["pending", "done"],
+            default: "pending"
+        },
+        transaction: { type: String },
         status: {
             type: String,
             enum: ["pending", "confirm"],

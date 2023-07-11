@@ -2,6 +2,30 @@ const bookingService = require("../service/bookingService.js");
 const { OK, ERROR } = require("../utils/responseHelper.js");
 const UserService = require("../service/userService.js");
 
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
+
+exports.paymentTour = async (req, res) => {
+    const { booking } = req.body;
+    const price = (booking && booking.price) ? ((booking.price / 90).toFixed(2) * 100) : 100;
+
+    try {
+        // Create a PaymentIntent with the order amount and currency
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: price,
+            currency: 'usd',
+            payment_method_types: ['card'],
+        });
+
+        res.send({
+            clientSecret: paymentIntent.client_secret,
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send({ error: 'An error occurred while creating the PaymentIntent.' });
+    }
+};
+
 
 exports.bookingTour = async (req, res) => {
     try {
@@ -22,11 +46,9 @@ exports.bookingTour = async (req, res) => {
 exports.updateTourStatus = async (req, res) => {
     try {
         const { email, tourId, data } = req.body;
+
         const user = await UserService.getUserByEmail(email);
         if (!user.length) return ERROR(res, [], "User not found");
-
-        if (user[0]?.role !== "admin")
-            return ERROR(res, [], "You are not authorized to access the api");
 
         const bookingData = await bookingService.findBookingById(tourId);
 

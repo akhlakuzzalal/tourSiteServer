@@ -44,7 +44,7 @@ exports.findBookingByEmail = async (email) => {
 };
 exports.updateTourStatus = async (tourId, data) => {
     try {
-        const booking = db.Booking.findByIdAndUpdate(tourId, data, { new: false });
+        const booking = db.Booking.findByIdAndUpdate(tourId, data);
         return booking;
     } catch (err) {
         return err;
