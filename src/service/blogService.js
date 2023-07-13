@@ -38,6 +38,20 @@ exports.getABlog = async (id) => {
     return err;
   }
 };
+exports.getBlogByEmail = async (email) => {
+  try {
+    const user = await db.User.findOne({ email: email });
+    if (!user) {
+      return null;
+    }
+    const blog = await db.Blog.find({ createdBy: user._id });
+
+    return blog;
+  } catch (err) {
+    return err;
+  }
+};
+
 
 exports.updateABlog = async (id, blog) => {
   try {
