@@ -11,6 +11,17 @@ exports.getAllBlogs = async (req, res) => {
   }
 };
 
+exports.getBlogByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const blog = await BlogService.getBlogByEmail(email)
+    if (blog.message) return ERROR(res, [], blog.message);
+    return OK(res, blog, "Blog found");
+  } catch (err) {
+    ERROR(res, [], "Error while getting all blogs");
+  }
+};
+
 exports.getABlog = async (req, res) => {
   try {
     const { id } = req.params;
