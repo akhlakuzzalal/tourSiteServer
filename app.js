@@ -5,7 +5,15 @@ dotenv.config({ path: "./.env" });
 const api = require("./src/routes/api"); // Import api routes
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+const corsConfig = {
+    origin: '',
+    credential: true,
+    methods: ["GET", "POST", "PUT", "DELETE"]
+}
+app.use(cors(corsConfig))
+app.options('', cors(corsConfig));
+
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 require("./src/database/connection"); // Connect to database

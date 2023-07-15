@@ -1,9 +1,9 @@
 const config = {
   development: {
-    NOSQL: process.env.DEV_MONGODB_CONNECTION_STRING,
+    NOSQL: "mongodb+srv://shifat:s!fu!su99@cluster0.0dpwa.mongodb.net/travel-management?retryWrites=true&w=majority",
   },
   production: {
-    NOSQL: process.env.PROD_MONGODB_CONNECTION_STRING,
+    NOSQL: "mongodb+srv://shifat:s!fu!su99@cluster0.0dpwa.mongodb.net/travel-management?retryWrites=true&w=majority",
   },
 };
 
