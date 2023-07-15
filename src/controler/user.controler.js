@@ -10,7 +10,6 @@ exports.createUser = async (req, res) => {
     // set hash password
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword)
     // check valid email
     const validEmail = checkValidEmail(email);
     if (!validEmail) return ERROR(res, [], "Invalid email Address");
@@ -20,7 +19,6 @@ exports.createUser = async (req, res) => {
       email: email,
       password: hashedPassword
     }
-    console.log(payload)
     const user = await UserService.createUser(payload);
     if (user.message) return ERROR(res, [], user.message);
     return OK(res, user, "User created Successfully");
@@ -39,10 +37,14 @@ exports.loginUser = async (req, res) => {
     if (user.message) return ERROR(res, [], user.message);
 
     const userPassword = user[0]?.password;
+    const match = await bcrypt.compare(password, userPassword);
 
-    if (comparePasswords(password, userPassword)) return OK(res, user, "User logged in Successfully");
+    if (match) return OK(res, user, "User logged in Successfully");
 
     return ERROR(res, [], "Password is wrong");
+
+
+
 
   } catch (err) {
     ERROR(res, [], "Error while logging in user");
