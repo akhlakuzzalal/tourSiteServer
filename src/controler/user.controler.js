@@ -1,7 +1,7 @@
 const { ERROR, OK } = require("../utils/responseHelper");
 const UserService = require("../service/userService");
 const { checkValidEmail, comparePasswords } = require("../functions/common");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 exports.createUser = async (req, res) => {
   try {
@@ -17,8 +17,8 @@ exports.createUser = async (req, res) => {
       firstName,
       lastName,
       email: email,
-      password: hashedPassword
-    }
+      password: hashedPassword,
+    };
     const user = await UserService.createUser(payload);
     if (user.message) return ERROR(res, [], user.message);
     return OK(res, user, "User created Successfully");
@@ -42,10 +42,6 @@ exports.loginUser = async (req, res) => {
     if (match) return OK(res, user, "User logged in Successfully");
 
     return ERROR(res, [], "Password is wrong");
-
-
-
-
   } catch (err) {
     ERROR(res, [], "Error while logging in user");
   }
